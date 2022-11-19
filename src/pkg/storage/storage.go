@@ -10,6 +10,5 @@ type Storage struct {
 }
 
 func New(cfg *config.Config) Storage {
-	minio := NewMinioClient(cfg)
-	return Storage{minio}
+	return Storage{minio: NewMinioClient(cfg)}
 }
