@@ -1,10 +1,11 @@
 package http
 
 import (
+	"github.com/ayocodingit/storage-minio-service/src/config"
 	"github.com/gin-gonic/gin"
 )
 
-func NewTransportHttp() *gin.Engine {
+func NewTransportHttp(cfg *config.Config) *gin.Engine {
 	gin.SetMode(gin.ReleaseMode)
 
 	// Creates a router without any middleware by default
@@ -17,6 +18,10 @@ func NewTransportHttp() *gin.Engine {
 
 	// Recovery middleware recovers from any panics and writes a 500 if there was one.
 	r.Use(gin.Recovery())
+
+	if cfg.IsPublicAccess {
+		r.Static(cfg.Dst, cfg.Dst)
+	}
 
 	return r
 }
