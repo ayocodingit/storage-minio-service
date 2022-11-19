@@ -9,6 +9,7 @@ type MinioConfig struct {
 	Bucket    string
 	Url       string
 	Region    string
+	Ssl       bool
 }
 
 func LoadMinioConfig() *MinioConfig {
@@ -19,5 +20,6 @@ func LoadMinioConfig() *MinioConfig {
 		Bucket:    viper.GetString("MINIO_BUCKET"),
 		Url:       viper.GetString("MINIO_URL"),
 		Region:    viper.GetString("MINIO_REGION"),
+		Ssl:       viper.GetBool("MINIO_SSL"),
 	}
 }
