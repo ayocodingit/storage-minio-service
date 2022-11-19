@@ -10,7 +10,7 @@ import (
 
 func main() {
 	cfg := config.LoadConfig()
-	_ = storage.NewMinioClient(cfg)
+	_ = storage.New(cfg)
 	r := http.NewTransportHttp()
 
 	fmt.Println(fmt.Sprintf("listen app on http://0.0.0.0:%s", cfg.Port))
