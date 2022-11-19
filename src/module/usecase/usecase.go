@@ -15,7 +15,7 @@ func New(repository domain.Repository) domain.Usecase {
 }
 
 func (uc usecase) Upload(ctx context.Context, file domain.File) (domain.UploadResponse, error) {
-	if err := uc.Repository.Upload(ctx, &file); err != nil {
+	if err := uc.Repository.Upload(ctx, file); err != nil {
 		return domain.UploadResponse{}, err
 	}
 
