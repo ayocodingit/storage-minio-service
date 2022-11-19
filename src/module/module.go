@@ -10,7 +10,7 @@ import (
 )
 
 func Load(r *gin.Engine, storage storage.Storage, cfg config.Config) {
-	repository := repository.New(storage)
+	repository := repository.New(storage, cfg)
 	usecase := usecase.New(repository)
 	http := http.New(usecase, cfg)
 

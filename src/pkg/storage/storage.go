@@ -6,11 +6,11 @@ import (
 )
 
 type Storage struct {
-	minio *minio.Client
+	Minio *minio.Client
 }
 
 func New(cfg config.Config) Storage {
 	return Storage{
-		minio: NewMinioClient(cfg),
+		Minio: NewMinioClient(cfg),
 	}
 }
