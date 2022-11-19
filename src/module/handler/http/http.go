@@ -13,10 +13,10 @@ import (
 
 type handler struct {
 	usecase domain.Usecase
-	cfg     *config.Config
+	cfg     config.Config
 }
 
-func New(usecase domain.Usecase, cfg *config.Config) handler {
+func New(usecase domain.Usecase, cfg config.Config) handler {
 	return handler{usecase, cfg}
 }
 
@@ -25,7 +25,6 @@ func (h handler) Handler(r *gin.Engine) {
 }
 
 func (h handler) upload(c *gin.Context) {
-	// Single file
 	file, err := c.FormFile("file")
 
 	if err != nil {

@@ -11,14 +11,14 @@ type Config struct {
 	Minio          *MinioConfig
 }
 
-func LoadConfig() *Config {
+func LoadConfig() Config {
 	viper.SetConfigFile(".env")
 	viper.AutomaticEnv()
 	if err := viper.ReadInConfig(); err != nil {
 		panic(err)
 	}
 
-	return &Config{
+	return Config{
 		Port:           viper.GetString("APP_PORT"),
 		IsPublicAccess: viper.GetBool("IS_PUBLIC_ACCESS"),
 		Dst:            "public",

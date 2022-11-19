@@ -5,7 +5,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func NewTransportHttp(cfg *config.Config) *gin.Engine {
+func NewTransportHttp(cfg config.Config) *gin.Engine {
 	gin.SetMode(gin.ReleaseMode)
 
 	// Creates a router without any middleware by default

@@ -9,7 +9,7 @@ type Storage struct {
 	minio *minio.Client
 }
 
-func New(cfg *config.Config) Storage {
+func New(cfg config.Config) Storage {
 	return Storage{
 		minio: NewMinioClient(cfg),
 	}
