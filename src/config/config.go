@@ -6,6 +6,7 @@ import (
 
 type Config struct {
 	Port           string
+	Secret         string
 	IsPublicAccess bool
 	Dst            string
 	Minio          *MinioConfig
@@ -20,6 +21,7 @@ func LoadConfig() Config {
 
 	return Config{
 		Port:           viper.GetString("APP_PORT"),
+		Secret:         viper.GetString("APP_SECRET"),
 		IsPublicAccess: viper.GetBool("IS_PUBLIC_ACCESS"),
 		Dst:            "public",
 		Minio:          LoadMinioConfig(),

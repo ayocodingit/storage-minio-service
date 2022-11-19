@@ -19,8 +19,5 @@ func (uc usecase) Upload(ctx context.Context, file domain.File) (domain.UploadRe
 		return domain.UploadResponse{}, err
 	}
 
-	// remove information dest
-	file.Dest = ""
-
 	return domain.UploadResponse{Data: file}, nil
 }
