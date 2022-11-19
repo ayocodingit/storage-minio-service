@@ -1,14 +1,14 @@
-package minio
+package storage
 
 import (
 	"github.com/ayocodingit/storage-minio-service/src/config"
-	minioClient "github.com/minio/minio-go/v7"
-	credentials "github.com/minio/minio-go/v7/pkg/credentials"
+	"github.com/minio/minio-go/v7"
+	"github.com/minio/minio-go/v7/pkg/credentials"
 )
 
-func NewClientMinio(cfg *config.Config) *minioClient.Client {
+func NewMinioClient(cfg *config.Config) *minio.Client {
 	// Initialize minio client object.
-	client, err := minioClient.New(cfg.Minio.Endpoint, &minioClient.Options{
+	client, err := minio.New(cfg.Minio.Endpoint, &minio.Options{
 		Creds:  credentials.NewStaticV4(cfg.Minio.AccessKey, cfg.Minio.SecretKey, ""),
 		Secure: cfg.Minio.Ssl,
 	})
