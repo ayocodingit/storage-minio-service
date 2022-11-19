@@ -27,6 +27,7 @@ func (h handler) Handler(r *gin.Engine) {
 func (h handler) upload(c *gin.Context) {
 	// Single file
 	file, err := c.FormFile("file")
+
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error": err.Error(),
@@ -35,8 +36,8 @@ func (h handler) upload(c *gin.Context) {
 	}
 
 	filename := uuid.New().String() + filepath.Ext(file.Filename)
+	_ = file.Header["Content-Type"][0]
 
-	// Upload the file to specific dst.
 	dst := h.cfg.Dst + "/" + filename
 	c.SaveUploadedFile(file, dst)
 
