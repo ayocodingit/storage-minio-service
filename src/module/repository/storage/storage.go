@@ -15,11 +15,10 @@ type repository struct {
 }
 
 func New(storage storage.Storage, config config.Config) domain.Repository {
-	return &repository{storage, config}
+	return repository{storage, config}
 }
 
 func (r repository) Upload(ctx context.Context, file domain.File) error {
-	// Upload the zip file with FPutObject
 	if _, err := r.storage.Minio.FPutObject(ctx, r.cfg.Minio.Bucket, file.Name, file.Dest, minio.PutObjectOptions{ContentType: file.ContentType}); err != nil {
 		return err
 	}
