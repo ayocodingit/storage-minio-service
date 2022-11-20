@@ -12,8 +12,8 @@ type MinioConfig struct {
 	Ssl       bool
 }
 
-func LoadMinioConfig() *MinioConfig {
-	return &MinioConfig{
+func LoadMinioConfig() MinioConfig {
+	return MinioConfig{
 		AccessKey: viper.GetString("MINIO_ACCESS_KEY"),
 		SecretKey: viper.GetString("MINIO_SECRET_KEY"),
 		Endpoint:  viper.GetString("MINIO_ENDPOINT"),

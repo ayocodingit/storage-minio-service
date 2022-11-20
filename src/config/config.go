@@ -9,7 +9,7 @@ type Config struct {
 	Secret         string
 	IsPublicAccess bool
 	Dst            string
-	Minio          *MinioConfig
+	Minio          MinioConfig
 }
 
 func LoadConfig() Config {
