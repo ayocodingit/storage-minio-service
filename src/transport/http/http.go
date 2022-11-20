@@ -25,10 +25,6 @@ func NewTransportHttp(cfg config.Config) *gin.Engine {
 	// middleware global
 	r.Use(verify(cfg))
 
-	if cfg.IsPublicAccess {
-		r.Static(cfg.Dst, cfg.Dst)
-	}
-
 	// enabled cors
 	r.Use(cors.Default())
 

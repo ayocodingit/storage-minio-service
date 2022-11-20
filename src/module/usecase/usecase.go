@@ -2,6 +2,7 @@ package usecase
 
 import (
 	"context"
+	"os"
 
 	"github.com/ayocodingit/storage-minio-service/src/module/domain"
 )
@@ -18,6 +19,8 @@ func (uc usecase) Upload(ctx context.Context, file domain.File) (domain.UploadRe
 	if err := uc.Repository.Upload(ctx, file); err != nil {
 		return domain.UploadResponse{}, err
 	}
+
+	os.Remove(file.Dest)
 
 	return domain.UploadResponse{Data: file}, nil
 }
