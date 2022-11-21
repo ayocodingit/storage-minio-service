@@ -25,3 +25,11 @@ func (r repository) Upload(ctx context.Context, file domain.File) error {
 
 	return nil
 }
+
+func (r repository) Download(ctx context.Context, file domain.File) error {
+	if err := r.storage.Minio.FGetObject(ctx, r.cfg.Minio.Bucket, file.Name, file.Dest, minio.GetObjectOptions{}); err != nil {
+		return err
+	}
+
+	return nil
+}

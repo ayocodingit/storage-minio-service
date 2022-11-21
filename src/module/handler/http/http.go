@@ -21,6 +21,7 @@ func New(usecase domain.Usecase, cfg config.Config) handler {
 
 func (h handler) Handler(r *gin.Engine) {
 	r.POST("upload", h.upload)
+	r.GET("download/:filename", h.download)
 }
 
 func (h handler) upload(c *gin.Context) {
@@ -46,6 +47,28 @@ func (h handler) upload(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, res)
+
+	return
+}
+
+func (h handler) download(c *gin.Context) {
+	filename := c.Param("filename")
+
+	file := domain.File{
+		Name: filename,
+		Dest: h.cfg.Dst + "/" + filename,
+	}
+
+	fileBytes, err := h.usecase.Download(c.Request.Context(), file)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+
+	c.Status(http.StatusOK)
+	c.Writer.Write(fileBytes)
 
 	return
 }

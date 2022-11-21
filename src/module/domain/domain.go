@@ -17,8 +17,10 @@ type UploadResponse struct {
 
 type Repository interface {
 	Upload(context.Context, File) error
+	Download(context.Context, File) error
 }
 
 type Usecase interface {
 	Upload(context.Context, File) (UploadResponse, error)
+	Download(context.Context, File) ([]byte, error)
 }
