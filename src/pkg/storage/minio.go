@@ -3,6 +3,7 @@ package storage
 import (
 	"context"
 	"fmt"
+	"log"
 
 	"github.com/ayocodingit/storage-minio-service/src/config"
 	"github.com/minio/minio-go/v7"
@@ -17,17 +18,17 @@ func NewMinioClient(cfg config.Config) *minio.Client {
 	})
 
 	if err != nil {
-		panic(err)
+		log.Fatal(err)
 	}
 
 	exists, err := client.BucketExists(context.TODO(), cfg.Minio.Bucket)
 	if err != nil {
-		panic(err)
+		log.Fatal(err)
 	}
 
 	if !exists {
 		err = fmt.Errorf("bucket not already")
-		panic(err)
+		log.Fatal(err)
 	}
 
 	return client
