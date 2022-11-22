@@ -35,18 +35,18 @@ func verify(cfg config.Config) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		header := c.Request.Header["Api-Key"]
 		if len(header) == 0 {
-			verifyError(c)
+			verifyError(c, "Unauthorized, Please set header Api-Key before send request")
 		}
 
 		if header[0] != cfg.Secret {
-			verifyError(c)
+			verifyError(c, "Unauthorized, Api-Key not match with app secret")
 		}
 	}
 }
 
-func verifyError(c *gin.Context) {
+func verifyError(c *gin.Context, error string) {
 	c.JSON(http.StatusUnauthorized, gin.H{
-		"error": "Unauthorized",
+		"error": error,
 	})
 	c.Abort()
 }
