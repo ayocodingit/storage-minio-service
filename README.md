@@ -6,6 +6,16 @@
 
 # Storage Minio Service
 
+## How to Use Service 
+
+there are several endpoints that can be used
+
+```curl
+$ POST /upload              * endpoint for upload file
+$ GET /download/:filename   * endpoint for get file (if configuration cloud set private)
+$ DELETE /delete/:filename  * endpoint for remove file
+```
+
 ## Tech Stacks
 
 - **Golang v1.17** - <https://go.dev/>

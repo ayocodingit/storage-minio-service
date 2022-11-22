@@ -22,6 +22,7 @@ func New(usecase domain.Usecase, cfg config.Config) handler {
 func (h handler) Handler(r *gin.Engine) {
 	r.POST("upload", h.upload)
 	r.GET("download/:filename", h.download)
+	r.DELETE("delete/:filename", h.delete)
 }
 
 func (h handler) upload(c *gin.Context) {
@@ -70,5 +71,21 @@ func (h handler) download(c *gin.Context) {
 	c.Status(http.StatusOK)
 	c.Writer.Write(fileBytes)
 
+	return
+}
+
+func (h handler) delete(c *gin.Context) {
+	filename := c.Param("filename")
+
+	if err := h.usecase.Delete(c.Request.Context(), filename); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"message": "Success Remove file with filename is " + filename,
+	})
 	return
 }

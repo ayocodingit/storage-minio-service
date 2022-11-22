@@ -23,6 +23,8 @@ func (uc usecase) Upload(ctx context.Context, file domain.File) (domain.UploadRe
 
 	os.Remove(file.Dest)
 
+	file.Dest = ""
+
 	return domain.UploadResponse{Data: file}, nil
 }
 
@@ -39,4 +41,12 @@ func (uc usecase) Download(ctx context.Context, file domain.File) (fileBytes []b
 	os.Remove(file.Dest)
 
 	return fileBytes, nil
+}
+
+func (uc usecase) Delete(ctx context.Context, filename string) error {
+	if err := uc.Repository.Delete(ctx, filename); err != nil {
+		return err
+	}
+
+	return nil
 }

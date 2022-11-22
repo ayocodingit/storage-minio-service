@@ -33,3 +33,11 @@ func (r repository) Download(ctx context.Context, file domain.File) error {
 
 	return nil
 }
+
+func (r repository) Delete(ctx context.Context, filename string) error {
+	if err := r.storage.Minio.RemoveObject(ctx, r.cfg.Minio.Bucket, filename, minio.RemoveObjectOptions{}); err != nil {
+		return err
+	}
+
+	return nil
+}
