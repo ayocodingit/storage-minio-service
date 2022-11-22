@@ -6,9 +6,9 @@
 
 # Storage Minio Service
 
-## How to Use Service 
+## Details information for endpoints 
 
-there are several endpoints that can be used
+There are several endpoints that can be used, including:
 
 ```curl
 $ POST /upload              * endpoint for upload file
