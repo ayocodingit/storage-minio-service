@@ -62,7 +62,7 @@ func (h handler) download(c *gin.Context) {
 
 	fileBytes, err := h.usecase.Download(c.Request.Context(), file)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
+		c.JSON(http.StatusNotFound, gin.H{
 			"error": err.Error(),
 		})
 		return
