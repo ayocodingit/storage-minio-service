@@ -6,7 +6,7 @@
 
 # Storage Minio Service
 
-## Details information for endpoints 
+## Detail information for endpoints 
 
 There are several endpoints that can be used, including:
 
