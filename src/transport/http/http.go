@@ -28,7 +28,15 @@ func NewTransportHttp(cfg config.Config) *gin.Engine {
 	// enabled cors
 	r.Use(cors.Default())
 
+	r.NoRoute(routeNotFound)
+
 	return r
+}
+
+func routeNotFound(c *gin.Context) {
+	c.AbortWithStatusJSON(http.StatusNotFound, gin.H{
+		"error": "Not Found!",
+	})
 }
 
 func verify(cfg config.Config) gin.HandlerFunc {
