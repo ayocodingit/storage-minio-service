@@ -44,10 +44,12 @@ func verify(cfg config.Config) gin.HandlerFunc {
 		header := c.Request.Header["Api-Key"]
 		if len(header) == 0 {
 			verifyError(c, "Unauthorized, Please set header Api-Key before send request")
+			return
 		}
 
 		if header[0] != cfg.Secret {
 			verifyError(c, "Unauthorized, Api-Key not match with app secret")
+			return
 		}
 	}
 }
