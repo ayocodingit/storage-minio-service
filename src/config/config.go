@@ -3,27 +3,34 @@ package config
 import (
 	"log"
 
+	"github.com/ayocodingit/storage-minio-service/src/validator"
 	"github.com/spf13/viper"
 )
 
 type Config struct {
-	Port   string
-	Secret string
-	Dst    string
-	Minio  MinioConfig
+	Port   string      `validate:"required"`
+	Secret string      `validate:"required"`
+	Dst    string      `validate:"required"`
+	Minio  MinioConfig `validate:"required"`
 }
 
-func LoadConfig() Config {
+func LoadConfig(validator validator.Validator) Config {
 	viper.SetConfigFile(".env")
 	viper.AutomaticEnv()
 	if err := viper.ReadInConfig(); err != nil {
 		log.Fatal(err)
 	}
 
-	return Config{
+	config := Config{
 		Port:   viper.GetString("APP_PORT"),
 		Secret: viper.GetString("APP_SECRET"),
 		Dst:    "tmp",
 		Minio:  LoadMinioConfig(),
 	}
+
+	if err := validator.Validation(config); err != nil {
+		log.Fatal(err)
+	}
+
+	return config
 }

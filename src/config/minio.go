@@ -3,13 +3,13 @@ package config
 import "github.com/spf13/viper"
 
 type MinioConfig struct {
-	AccessKey string
-	SecretKey string
-	Endpoint  string
-	Bucket    string
-	Url       string
-	Region    string
-	Ssl       bool
+	AccessKey string `validate:"required"`
+	SecretKey string `validate:"required"`
+	Endpoint  string `validate:"required"`
+	Bucket    string `validate:"required"`
+	Url       string `validate:"required,url"`
+	Region    string `validate:"required"`
+	Ssl       bool   `validate:"required,boolean"`
 }
 
 func LoadMinioConfig() MinioConfig {

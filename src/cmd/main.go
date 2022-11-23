@@ -4,13 +4,17 @@ import (
 	"fmt"
 
 	"github.com/ayocodingit/storage-minio-service/src/config"
+	"github.com/ayocodingit/storage-minio-service/src/lang"
 	"github.com/ayocodingit/storage-minio-service/src/module"
 	"github.com/ayocodingit/storage-minio-service/src/pkg/storage"
 	"github.com/ayocodingit/storage-minio-service/src/transport/http"
+	"github.com/ayocodingit/storage-minio-service/src/validator"
 )
 
 func main() {
-	cfg := config.LoadConfig()
+	lang := lang.NewLang()
+	validator := validator.New(lang)
+	cfg := config.LoadConfig(validator)
 	storage := storage.New(cfg)
 	r := http.NewTransportHttp(cfg)
 
