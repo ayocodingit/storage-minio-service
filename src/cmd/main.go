@@ -12,7 +12,7 @@ import (
 )
 
 func main() {
-	lang := lang.NewLang()
+	lang := lang.New()
 	validator := validator.New(lang)
 	cfg := config.LoadConfig(validator)
 	storage := storage.New(cfg)

@@ -1,6 +1,7 @@
 package validator
 
 import (
+	"regexp"
 	"strings"
 
 	"github.com/ayocodingit/storage-minio-service/src/lang"
@@ -16,22 +17,36 @@ func New(lang lang.Lang) Validator {
 	return Validator{validator.New(), lang}
 }
 
-func (v Validator) Validation(args interface{}) map[string]string {
+func (v Validator) Validation(args interface{}) interface{} {
 	errors := map[string]string{}
 
-	if err := v.Validate.Struct(args); err != nil {
-		for _, err := range err.(validator.ValidationErrors) {
-			message := v.Lang.GetMessage(err.Tag(), map[string]interface{}{
-				"Field": err.Field(),
-			})
+	err := v.Validate.Struct(args)
 
-			key := strings.ToLower(err.StructNamespace())
-			errors[key] = message
-		}
+	if err == nil {
+		return nil
 	}
 
-	if len(errors) == 0 {
-		return nil
+	if _, ok := err.(*validator.InvalidValidationError); ok {
+		return err
+	}
+
+	errs := err.(validator.ValidationErrors)
+
+	for _, err := range errs {
+		msg, errMsg := v.Lang.GetMessage(err.Tag(), map[string]interface{}{
+			"Field": err.Field(),
+		})
+
+		re := regexp.MustCompile(`Error:(.+)`)
+		match := re.FindStringSubmatch(err.Error())
+		message := match[1]
+
+		if errMsg == nil {
+			message = msg
+		}
+
+		key := strings.ToLower(err.StructNamespace())
+		errors[key] = message
 	}
 
 	return errors
