@@ -3,7 +3,7 @@ package config
 import (
 	"log"
 
-	"github.com/ayocodingit/storage-minio-service/src/validator"
+	"github.com/jabardigitalservice/utilities-go/validator"
 	"github.com/spf13/viper"
 )
 
