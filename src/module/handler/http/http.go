@@ -5,7 +5,7 @@ import (
 	"path/filepath"
 
 	"github.com/ayocodingit/storage-minio-service/src/config"
-	"github.com/ayocodingit/storage-minio-service/src/module/domain"
+	"github.com/ayocodingit/storage-minio-service/src/domain"
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 )
@@ -28,13 +28,19 @@ func (h handler) Handler(r *gin.Engine) {
 func (h handler) upload(c *gin.Context) {
 	f, _ := c.FormFile("file")
 
+	if f == nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": "No upload image",
+		})
+		return
+	}
+
 	filename := uuid.New().String() + filepath.Ext(f.Filename)
 
 	file := domain.File{
 		Name:        filename,
 		ContentType: f.Header["Content-Type"][0],
 		Dest:        h.cfg.Dst + "/" + filename,
-		Url:         h.cfg.Minio.Url + h.cfg.Minio.Bucket + "/" + filename,
 	}
 
 	c.SaveUploadedFile(f, file.Dest)

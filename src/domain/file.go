@@ -16,7 +16,7 @@ type UploadResponse struct {
 }
 
 type Repository interface {
-	Upload(context.Context, File) error
+	Upload(context.Context, *File) error
 	Download(context.Context, File) error
 	Delete(context.Context, string) error
 }

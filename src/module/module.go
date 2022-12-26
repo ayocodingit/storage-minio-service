@@ -9,7 +9,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func Load(r *gin.Engine, storage storage.Storage, cfg config.Config) {
+func Http(r *gin.Engine, storage storage.Storage, cfg config.Config) {
 	repository := repoMinio.New(storage.Minio, cfg)
 	usecase := usecase.New(repository)
 	http := http.New(usecase, cfg)

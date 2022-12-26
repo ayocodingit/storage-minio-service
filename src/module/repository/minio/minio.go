@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"github.com/ayocodingit/storage-minio-service/src/config"
-	"github.com/ayocodingit/storage-minio-service/src/module/domain"
+	"github.com/ayocodingit/storage-minio-service/src/domain"
 	"github.com/minio/minio-go/v7"
 )
 
@@ -17,10 +17,12 @@ func New(minio *minio.Client, config config.Config) domain.Repository {
 	return repository{minio, config}
 }
 
-func (r repository) Upload(ctx context.Context, file domain.File) error {
+func (r repository) Upload(ctx context.Context, file *domain.File) error {
 	if _, err := r.minio.FPutObject(ctx, r.cfg.Minio.Bucket, file.Name, file.Dest, minio.PutObjectOptions{ContentType: file.ContentType}); err != nil {
 		return err
 	}
+
+	file.Url = r.cfg.Minio.Url + r.cfg.Minio.Bucket + "/" + file.Name
 
 	return nil
 }

@@ -14,7 +14,7 @@ type Config struct {
 	Minio  MinioConfig `validate:"required"`
 }
 
-func LoadConfig(validator validator.Validator) Config {
+func New(validator validator.Validator) Config {
 	viper.SetConfigFile(".env")
 	viper.AutomaticEnv()
 	if err := viper.ReadInConfig(); err != nil {
